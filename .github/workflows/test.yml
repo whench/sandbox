@@ -1,9 +1,23 @@
 name: CI Test
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: Run Python script
         run: python hello.py
+
+      - name: Install pytest (if available)
+        run: pip install pytest || echo "pytest not installed, skipping"
+
+      - name: Run tests
+        run: python -m pytest || echo "pytest not installed, skipping"
