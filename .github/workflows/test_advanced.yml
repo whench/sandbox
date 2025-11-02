@@ -7,13 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
       - name: Run demo script
-        run: python examples/demo_script.py
+        run: |
+          export PYTHONPATH=$PYTHONPATH:./src
+          python examples/demo_script.py
+
       - name: Run Bash script
-        run: bash scripts/install.sh
+        run: |
+          chmod +x scripts/install.sh
+          bash scripts/install.sh
+
       - name: Markdown lint (if installed)
         run: markdownlint docs/*.md || echo "markdownlint not installed"
