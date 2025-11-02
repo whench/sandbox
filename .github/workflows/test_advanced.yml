@@ -1,0 +1,19 @@
+name: Advanced CI Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Run demo script
+        run: python examples/demo_script.py
+      - name: Run Bash script
+        run: bash scripts/install.sh
+      - name: Markdown lint (if installed)
+        run: markdownlint docs/*.md || echo "markdownlint not installed"
